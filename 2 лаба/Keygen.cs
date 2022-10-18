@@ -37,7 +37,7 @@
         private ulong GetD()
         {
             var extGcd = NumbersOperation.ExtGcd(E, Lambda);
-            return (ulong)extGcd.coefA;
+            return (ulong)Math.Abs(extGcd.coefA);
         }
 
         public RSA_Keygen (uint p, uint q)
@@ -52,6 +52,7 @@
 
             Lambda = NumbersOperation.LCM(P - 1, Q - 1);
             E = GetE();
+            Console.WriteLine($"Lambda: {Lambda}, E: {E}");
             D = GetD();
         }
     }

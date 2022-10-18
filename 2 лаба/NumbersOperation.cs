@@ -41,40 +41,30 @@
         /// Extended Euclidean algorithm GCD
         /// Return result of solwe coefA*num1 + coefB*num2 = gcd
         /// </summary>
-        public static ExtGcdElem ExtGcd (ulong num1, ulong num2)
+        public static ExtGcdElem ExtGcd(ulong num1, ulong num2)
         {
-            var lower = num1 > num2 ? num2 : num1;
-            var upper = num1 < num2 ? num2 : num1;
+            var r1 = num1;
+            var r2 = num2;
+            var s1 = 1L; 
+            var s2 = 0L;
+            var t1 = 0L;
+            var t2 = 1L;
             
-            var remainder = upper % lower;          // остаток деления 
-
-            var ans = new ExtGcdElem(lower, 1, 0);
-            long lastA = 0, lastB = 1;
-
-            while (remainder > 0)
+            while (r1 % r2 != 0)
             {
-                var quotient = upper / lower;       // Частное деления
-                var tmpA = ans.coefA - (long)quotient * lastA;
-                ans.coefA = lastA;
-                lastA = tmpA;
-
-                var tmpB = ans.coefB - (long)quotient * lastB;
-                ans.coefB = lastB;
-                lastB = tmpB;
-
-                upper = lower;
-                lower = remainder;
-                remainder = upper % lower;
+                long divRes = (long)(r1 / r2);
+                (r1, r2) = (r2, r1 % r2);
+                (s1, s2) = (s2, s1 - s2 * divRes);
+                (t1, t2) = (t2, t1 - t2 * divRes);
             }
 
-            ans.gcd = lower;
-            return ans;
+            return new ExtGcdElem(r2, s2, t2);
         }
 
-        /// <summary>
-        /// Least Common Multiple (наименьшее общее кратное)
-        /// </summary>
-        public static ulong LCM(uint num1, uint num2)
+            /// <summary>
+            /// Least Common Multiple (наименьшее общее кратное)
+            /// </summary>
+            public static ulong LCM(uint num1, uint num2)
         {
             return ((ulong)num1 * num2) / GCD(num1, num2);
         }
