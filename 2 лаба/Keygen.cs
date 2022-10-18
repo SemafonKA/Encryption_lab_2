@@ -37,7 +37,16 @@
         private ulong GetD()
         {
             var extGcd = NumbersOperation.ExtGcd(E, Lambda);
-            return (ulong)Math.Abs(extGcd.coefA);
+            if (extGcd.coefA < 0)
+            {
+                var mult = extGcd.coefA * (long)E + (long)Lambda;
+                while (mult < 0 || mult % (long)E != 0)
+                {
+                    mult += (long)Lambda;
+                }
+                extGcd.coefA = mult / (long)E;
+            }
+            return (ulong)extGcd.coefA;
         }
 
         public RSA_Keygen (uint p, uint q)
@@ -51,8 +60,8 @@
             Q = q;
 
             Lambda = NumbersOperation.LCM(P - 1, Q - 1);
-            E = GetE();
-            Console.WriteLine($"Lambda: {Lambda}, E: {E}");
+            //E = GetE();
+            E = 17;
             D = GetD();
         }
     }

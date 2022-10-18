@@ -18,6 +18,5 @@ catch (Exception e)
 }
 
 var fullKey = new RSA_Keygen(p, q);
-
 Console.WriteLine($"Полученный открытый ключ: ({fullKey.N}, {fullKey.E})");
 Console.WriteLine($"Полученный закрытый ключ: ({fullKey.N}, {fullKey.D})");
