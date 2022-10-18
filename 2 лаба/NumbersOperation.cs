@@ -1,0 +1,102 @@
+﻿namespace RSA_cryptoprogram
+{
+    public static class NumbersOperation
+    {
+        public class ExtGcdElem
+        {
+            public ulong gcd;
+            public long coefA;
+            public long coefB;
+
+            public ExtGcdElem(ulong gcd, long coefA, long coefB)
+            {
+                this.gcd = gcd;
+                this.coefA = coefA;
+                this.coefB = coefB;
+            }
+        }
+
+        /// <summary>
+        /// Greatest Common Divisor (наибольший общий делитель)
+        /// Based on Euclidean algorithm
+        /// </summary>
+        public static ulong GCD(ulong num1, ulong num2)
+        {
+            var lower = num1 > num2 ? num2 : num1;
+            var upper = num1 < num2 ? num2 : num1;
+
+            var remainder = upper % lower;        // остаток деления чисел
+
+            while (remainder > 0)
+            {
+                upper = lower;
+                lower = remainder;
+                remainder = upper % lower;
+            }
+
+            return lower;
+        }
+
+        /// <summary>
+        /// Extended Euclidean algorithm GCD
+        /// Return result of solwe coefA*num1 + coefB*num2 = gcd
+        /// </summary>
+        public static ExtGcdElem ExtGcd (ulong num1, ulong num2)
+        {
+            var lower = num1 > num2 ? num2 : num1;
+            var upper = num1 < num2 ? num2 : num1;
+            
+            var remainder = upper % lower;          // остаток деления 
+
+            var ans = new ExtGcdElem(lower, 1, 0);
+            long lastA = 0, lastB = 1;
+
+            while (remainder > 0)
+            {
+                var quotient = upper / lower;       // Частное деления
+                var tmpA = ans.coefA - (long)quotient * lastA;
+                ans.coefA = lastA;
+                lastA = tmpA;
+
+                var tmpB = ans.coefB - (long)quotient * lastB;
+                ans.coefB = lastB;
+                lastB = tmpB;
+
+                upper = lower;
+                lower = remainder;
+                remainder = upper % lower;
+            }
+
+            ans.gcd = lower;
+            return ans;
+        }
+
+        /// <summary>
+        /// Least Common Multiple (наименьшее общее кратное)
+        /// </summary>
+        public static ulong LCM(uint num1, uint num2)
+        {
+            return ((ulong)num1 * num2) / GCD(num1, num2);
+        }
+        
+        /// <summary>
+        /// Check if num is prime
+        /// </summary>
+        public static bool IsPrime(uint num)
+        {
+            // All prime numbers is 2, or 3, or 6*i +- 1
+            if (num == 2 || num == 3) return true;
+
+            if (num % 2 == 0 || num % 3 == 0) return false;
+
+            // Check all prime numbers before sqrt(num) 
+            for (uint i = 6; i <= Math.Sqrt(num); i+=6)
+            {
+                if (num % (i - 1) == 0) return false;
+                if (num % (i + 1) == 0) return false;
+            }
+
+            return true;
+        }
+    }
+}
