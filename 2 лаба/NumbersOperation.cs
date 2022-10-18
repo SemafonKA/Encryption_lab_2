@@ -22,19 +22,15 @@
         /// </summary>
         public static ulong GCD(ulong num1, ulong num2)
         {
-            var lower = num1 > num2 ? num2 : num1;
-            var upper = num1 < num2 ? num2 : num1;
+            var r1 = num1;
+            var r2 = num2;
 
-            var remainder = upper % lower;        // остаток деления чисел
-
-            while (remainder > 0)
+            while (r1 % r2 != 0)
             {
-                upper = lower;
-                lower = remainder;
-                remainder = upper % lower;
+                (r1, r2) = (r2, r1 % r2);
             }
 
-            return lower;
+            return r2;
         }
 
         /// <summary>
@@ -45,11 +41,11 @@
         {
             var r1 = num1;
             var r2 = num2;
-            var s1 = 1L; 
+            var s1 = 1L;
             var s2 = 0L;
             var t1 = 0L;
             var t2 = 1L;
-            
+
             while (r1 % r2 != 0)
             {
                 long divRes = (long)(r1 / r2);
@@ -61,14 +57,14 @@
             return new ExtGcdElem(r2, s2, t2);
         }
 
-            /// <summary>
-            /// Least Common Multiple (наименьшее общее кратное)
-            /// </summary>
-            public static ulong LCM(uint num1, uint num2)
+        /// <summary>
+        /// Least Common Multiple (наименьшее общее кратное)
+        /// </summary>
+        public static ulong LCM(uint num1, uint num2)
         {
             return ((ulong)num1 * num2) / GCD(num1, num2);
         }
-        
+
         /// <summary>
         /// Check if num is prime
         /// </summary>
@@ -80,7 +76,7 @@
             if (num % 2 == 0 || num % 3 == 0) return false;
 
             // Check all prime numbers before sqrt(num) 
-            for (uint i = 6; i <= Math.Sqrt(num); i+=6)
+            for (uint i = 6; i <= Math.Sqrt(num); i += 6)
             {
                 if (num % (i - 1) == 0) return false;
                 if (num % (i + 1) == 0) return false;
