@@ -16,16 +16,17 @@ namespace RSA_cryptoprogram
                 Console.Write("q: ");
                 inp = Console.ReadLine();
                 q = uint.Parse(inp);
+                var fullKey = new RSA_Keygen(p, q);
+
+                Console.WriteLine($"Полученный открытый ключ: ({fullKey.N}, {fullKey.E})");
+                Console.WriteLine($"Полученный закрытый ключ: ({fullKey.N}, {fullKey.D})");
             }
             catch (Exception e)
             {
                 Console.WriteLine("Некорректно введённые числа. Повторите попытку.");
+                Console.WriteLine(e.Message);
                 return;
             }
-
-            var fullKey = new RSA_Keygen(p, q);
-            Console.WriteLine($"Полученный открытый ключ: ({fullKey.N}, {fullKey.E})");
-            Console.WriteLine($"Полученный закрытый ключ: ({fullKey.N}, {fullKey.D})");
         }
     }
 }
