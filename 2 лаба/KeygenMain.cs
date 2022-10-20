@@ -18,8 +18,8 @@ namespace RSA_cryptoprogram
                 q = uint.Parse(inp);
                 var fullKey = new RSA_Keygen(p, q);
 
-                Console.WriteLine($"Полученный открытый ключ: ({fullKey.N}, {fullKey.E})");
-                Console.WriteLine($"Полученный закрытый ключ: ({fullKey.N}, {fullKey.D})");
+                Console.WriteLine($"Полученный открытый ключ: (N:{fullKey.N}, E:{fullKey.E})");
+                Console.WriteLine($"Полученный закрытый ключ: (N:{fullKey.N}, D:{fullKey.D})");
             }
             catch (Exception e)
             {
