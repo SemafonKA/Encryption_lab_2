@@ -60,8 +60,7 @@
             Q = q;
 
             Lambda = NumbersOperation.LCM(P - 1, Q - 1);
-            //E = GetE();
-            E = 17;
+            E = GetE();
             D = GetD();
         }
     }
