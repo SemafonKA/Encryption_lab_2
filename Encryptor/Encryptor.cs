@@ -14,12 +14,20 @@ namespace RSA_cryptoprogram
 
         public ulong EncryptMessage (ulong message)
         {
-            ulong result = 1;
             ulong moduledMessage = message % N;
+            ulong result = 1;
+            ulong z = moduledMessage;
+            ulong power = E;
 
-            for (ulong i = 0; i < E; i++)
+            while (power != 0)
             {
-                result = (result * moduledMessage) % N;
+                if ((power & 1ul) == 1)
+                {
+                    result = (result * z) % N;
+                }
+                z = (z * z) % N;
+
+                power >>= 1;
             }
 
             return result;
