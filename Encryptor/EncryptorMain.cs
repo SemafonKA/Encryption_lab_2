@@ -17,7 +17,7 @@ namespace RSA_cryptoprogram
                 inp = Console.ReadLine();
                 var e = ulong.Parse(inp);
 
-                Console.Write("Напишите сообщщение для зашифровки (число): ");
+                Console.Write("Напишите сообщение для зашифровки (число): ");
                 inp = Console.ReadLine();
                 var message = ulong.Parse(inp);
 
